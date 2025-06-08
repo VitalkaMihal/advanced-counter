@@ -13,25 +13,22 @@ type setCounterProps = {
 
 export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, setDataCounter}: setCounterProps) => {
 
-    const [error, setError] = useState(false)
-    const [disabled, setDisabled] = useState<boolean>(false);
+    const [disabled, setDisabled] = useState<boolean>(true);
 
     useEffect(() => {
         if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
-            setError(true)
+            setDisabled(true)
         } else {
-            setError(false)
+            setDisabled(false)
         }
     }, [startValue, maxValue])
 
     const onChangeHandlerStart = (e: number) => {
         getStartValue(e)
-        setDisabled(false)
     }
 
     const onChangeHandlerMax = (e: number) => {
         getMaxValue(e)
-        setDisabled(false)
     }
 
     const onClickSetHandler = () => {
@@ -50,7 +47,7 @@ export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, se
         <div>
             start value:<InputData value={startValue} onChange={onChangeHandlerStart}/>
             max value:<InputData value={maxValue} onChange={onChangeHandlerMax}/>
-            <Button title="set" onClick={onClickSetHandler} disabled={error || disabled}/>
+            <Button title="set" onClick={onClickSetHandler} disabled={disabled}/>
         </div>
     );
 };
