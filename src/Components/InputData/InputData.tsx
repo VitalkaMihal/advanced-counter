@@ -11,22 +11,21 @@ export const InputData = ({value, onChange}: InputDataProps) => {
     const [valueInput, setValueInput] = useState(value)
     const [error, setError] = useState(false)
 
+
  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
         setValueInput(+e.currentTarget.value)
-
  }
     useEffect(() => {
         onChange(valueInput)
         if(valueInput < 0){
             setError(true)
         }else{setError(false)}
-    }  ,[valueInput])
+    }  , [valueInput])
 
     return (
         <>
         <input type="number"
-               value={valueInput}
+               value={value}
                onChange={onChangeHandler}
                className={error ? 'error' : ''}
         />

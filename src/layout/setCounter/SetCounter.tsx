@@ -6,47 +6,51 @@ import type {DataType} from "../../App.tsx";
 type setCounterProps = {
     startValue: number
     maxValue: number
-    // getMaxValue: (e: number) => void
-    // getStartValue: (e: number) => void
+    getStartValue: (e: number) => void
+    getMaxValue: (e: number) => void
     setDataCounter: (e: DataType) => void
 }
 
-export const SetCounter = ({startValue, maxValue, setDataCounter}: setCounterProps) => {
+export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, setDataCounter}: setCounterProps) => {
 
-    const [startValueInput, setStartValueInput] = useState(startValue);
-    const [maxValueInput, setMaxValueInput] = useState(maxValue);
     const [error, setError] = useState(false)
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        if (startValueInput < 0 || maxValueInput < 0 || startValueInput >= maxValueInput) {
+        if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
             setError(true)
         } else {
             setError(false)
         }
-    }, [startValueInput, maxValueInput])
+    }, [startValue, maxValue])
 
     const onChangeHandlerStart = (e: number) => {
-        setStartValueInput(e)
+        getStartValue(e)
+        setDisabled(false)
     }
 
     const onChangeHandlerMax = (e: number) => {
-        setMaxValueInput(e)
+        getMaxValue(e)
+        setDisabled(false)
     }
 
     const onClickSetHandler = () => {
         setDataCounter({
-            startValue: startValueInput,
-            maxValue: maxValueInput,
-            value: startValueInput,
-            stateError: false
+            startValue: startValue,
+            maxValue: maxValue,
+            value: startValue,
+            stateError: false,
+            stateSet: false,
+            stateIncorrect: false,
         })
+        setDisabled(true)
     }
 
     return (
         <div>
-            start value:<InputData value={startValueInput} onChange={onChangeHandlerStart}/>
-            max value:<InputData value={maxValueInput} onChange={onChangeHandlerMax}/>
-            <Button title="set" onClick={onClickSetHandler} disabled={error}/>
+            start value:<InputData value={startValue} onChange={onChangeHandlerStart}/>
+            max value:<InputData value={maxValue} onChange={onChangeHandlerMax}/>
+            <Button title="set" onClick={onClickSetHandler} disabled={error || disabled}/>
         </div>
     );
 };

@@ -7,55 +7,79 @@ export type DataType = {
     maxValue: number
     value: number
     stateError: boolean
+    stateSet: boolean
+    stateIncorrect: boolean
 }
 
 export function App() {
 
     const [data, setData] = useState<DataType>({
         startValue: 0,
-        maxValue: 0,
+        maxValue: 5,
         value: 0,
         stateError: false,
+        stateSet: false,
+        stateIncorrect: false,
     });
 
-    const {startValue, maxValue, value, stateError} = data;
-
-    // const getStartValue = (e: number) => {
-    //     setData({...data, startValue: e})
-    // }
-    //
-    // const getMaxValue = (e: number) => {
-    //     setData({...data, maxValue: e})
-    //
-    // }
+    const {startValue, maxValue, value, stateError, stateSet, stateIncorrect} = data;
 
     useEffect(() => {
-        if(value >= maxValue){setData({...data, stateError: true})}},
+            if (value >= maxValue) {
+                setData({...data, stateError: true})}},
         [value])
+
+    useEffect(() => {
+            if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
+                setData({...data, stateIncorrect: true})}
+        else{setData({...data, stateIncorrect: false})}},
+        [maxValue, startValue])
 
     const counterHandler = () => {
         setData({...data, value: value + 1})
     }
     const setDataCounter = (e: DataType) => {
         setData(e)
+        localStorage.setItem('user', JSON.stringify(e))
     }
 
     const resetCounter = () => {
         setData({...data, value: startValue, stateError: false})
     }
 
+    const getStartValue = (e: number) => {
+        setData({...data, stateSet: true, stateError: false, startValue: e})
+    }
+    const getMaxValue = (e: number) => {
+        setData({...data, stateSet: true, stateError: false, maxValue: e})
+    }
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                setData(JSON.parse(storedUser));
+            } catch (e) {
+                console.error('Ошибка парсинга JSON:', e);
+            }
+        }
+    }, []);
+
     return (
         <>
             <Counter
                 value={value}
                 stateError={stateError}
+                stateSet={stateSet}
                 counterHandler={counterHandler}
-                resetCounter={resetCounter}/>
-            <SetCounter startValue={startValue}
-                        maxValue={maxValue}
-                // getMaxValue={getMaxValue}
-                // getStartValue={getStartValue}
-                        setDataCounter={setDataCounter}/>
+                resetCounter={resetCounter}
+                stateIncorrect={stateIncorrect}/>
+            <SetCounter
+                startValue={startValue}
+                maxValue={maxValue}
+                getStartValue={getStartValue}
+                getMaxValue={getMaxValue}
+                setDataCounter={setDataCounter}/>
         </>
     )
 }
