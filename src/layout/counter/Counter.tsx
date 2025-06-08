@@ -1,24 +1,28 @@
-import {useState} from "react";
 import {Button} from "../../Components/Button/Button.tsx";
 import {Display} from "../display/Display.tsx";
 
-export const Counter = () => {
+type CounterProps = {
+    value: number
+    stateError: boolean
+    counterHandler: () => void
+    resetCounter: () => void;
+}
 
-    const [count, setCount] = useState(0)
-    const [start, setStart] = useState(0)
+
+export const Counter = ({stateError, value, counterHandler, resetCounter}: CounterProps) => {
 
     const onClickHandlerCounter = () => {
-        setCount(count + 1)
+        counterHandler()
     }
 
     const onClickHandlerReset = () => {
-        setCount(start)
+        resetCounter()
     }
 
     return (
         <>
-            <Display title={count}/>
-            <Button title="inc" onClick={onClickHandlerCounter}/>
+            <Display title={value} error={stateError}/>
+            <Button title="inc" onClick={onClickHandlerCounter} disabled={stateError}/>
             <Button title="reset" onClick={onClickHandlerReset}/>
         </>
     );

@@ -1,11 +1,13 @@
+import "./styles.css"
 
 type DisplayProps = {
-    title: number
+    title: number | string
+    error: boolean
 }
 
-export const Display = ({title}: DisplayProps) => {
+export const Display = ({title, error}: DisplayProps) => {
     return (
-        <div>
+        <div className={error ? "error" : undefined}>
             {title}
         </div>
     );
