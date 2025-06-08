@@ -1,6 +1,6 @@
 import {Button} from "../../Components/Button/Button.tsx";
 import {InputData} from "../../Components/InputData/InputData.tsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import type {DataType} from "../../App.tsx";
 
 type setCounterProps = {
@@ -14,12 +14,16 @@ type setCounterProps = {
 export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, setDataCounter}: setCounterProps) => {
 
     const [disabled, setDisabled] = useState<boolean>(true);
+    const isFirstRender = useRef(0);
 
     useEffect(() => {
+        if(isFirstRender.current <= 2){
+            isFirstRender.current++;
+            return;
+        }
+        setDisabled(false)
         if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
             setDisabled(true)
-        } else {
-            setDisabled(false)
         }
     }, [startValue, maxValue])
 
