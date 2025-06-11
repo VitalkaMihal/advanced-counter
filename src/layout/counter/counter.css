@@ -1,3 +1,38 @@
 .counter {
     display: flex;
+    flex-direction: column;
+    border: 2px solid #dab4b4;
+    padding: 15px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.counter-display {
+    display: flex;
+    min-width: 200px;
+    height: 50px;
+    border: 2px solid #dab4b4;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    color: #1b1111;
+    background-color: #9f8484;
+}
+
+.counter-counter-button {
+    display: flex;
+    min-width: 200px;
+    height: 50px;
+    border: 2px solid #dab4b4;
+    border-radius: 8px;
+    justify-content: space-around;
+}
+
+.counter-counter-button button {
+    display: flex;
+    padding: 5px 10px;
+    align-self: center;
+    border-radius: 5px;
+    border: none;
+    background-color: #ef5555;
 }

@@ -1,5 +1,6 @@
 import {Button} from "../../Components/Button/Button.tsx";
 import {Display} from "../display/Display.tsx";
+import "./counter.css"
 
 type CounterProps = {
     value: number
@@ -23,12 +24,16 @@ export const Counter = (
     }
 
     return (
-        <>
-            <Display
-                title={stateSet ? stateIncorrect ? "Incorrect value!" : "enter values and press 'set'" : value}
-                error={stateError || stateIncorrect}/>
-            <Button title="inc" onClick={onClickHandlerCounter} disabled={stateError || stateSet}/>
-            <Button title="reset" onClick={onClickHandlerReset} disabled={stateSet}/>
-        </>
+        <div className="counter">
+            <div className="counter-display">
+                <Display
+                    title={stateSet ? stateIncorrect ? "Incorrect value!" : "enter values and press 'set'" : value}
+                    error={stateError || stateIncorrect}/>
+            </div>
+            <div className="counter-counter-button">
+                <Button title="inc" onClick={onClickHandlerCounter} disabled={stateError || stateSet}/>
+                <Button title="reset" onClick={onClickHandlerReset} disabled={stateSet}/>
+            </div>
+        </div>
     );
 };
