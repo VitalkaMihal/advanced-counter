@@ -2,6 +2,7 @@ import {Button} from "../../Components/Button/Button.tsx";
 import {InputData} from "../../Components/InputData/InputData.tsx";
 import {useEffect, useRef, useState} from "react";
 import type {DataType} from "../../App.tsx";
+import "./setCounter.css"
 
 type setCounterProps = {
     startValue: number
@@ -17,7 +18,7 @@ export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, se
     const isFirstRender = useRef(0);
 
     useEffect(() => {
-        if(isFirstRender.current <= 2){
+        if (isFirstRender.current <= 2) {
             isFirstRender.current++;
             return;
         }
@@ -48,10 +49,13 @@ export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, se
     }
 
     return (
-        <div>
-            start value:<InputData value={startValue} onChange={onChangeHandlerStart}/>
-            max value:<InputData value={maxValue} onChange={onChangeHandlerMax}/>
-            <Button title="set" onClick={onClickSetHandler} disabled={disabled}/>
+        <div className="setCounter">
+            <div className="setCounter-container">
+                <div className="setCounter-input"> start value:<InputData value={startValue} onChange={onChangeHandlerStart}/></div>
+                <div className="setCounter-input">max value:<InputData value={maxValue} onChange={onChangeHandlerMax}/></div>
+            </div>
+
+            <Button className="setCounter-button" title="set" onClick={onClickSetHandler} disabled={disabled}/>
         </div>
     );
 };

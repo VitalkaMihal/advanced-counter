@@ -68,6 +68,12 @@ export function App() {
 
     return (
         <div className="App">
+            <SetCounter
+                startValue={startValue}
+                maxValue={maxValue}
+                getStartValue={getStartValue}
+                getMaxValue={getMaxValue}
+                setDataCounter={setDataCounter}/>
             <Counter
                 value={value}
                 stateError={stateError}
@@ -75,12 +81,6 @@ export function App() {
                 counterHandler={counterHandler}
                 resetCounter={resetCounter}
                 stateIncorrect={stateIncorrect}/>
-            <SetCounter
-                startValue={startValue}
-                maxValue={maxValue}
-                getStartValue={getStartValue}
-                getMaxValue={getMaxValue}
-                setDataCounter={setDataCounter}/>
         </div>
     )
 }

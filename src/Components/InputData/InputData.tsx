@@ -23,13 +23,13 @@ export const InputData = ({value, onChange}: InputDataProps) => {
     }  , [valueInput])
 
     return (
-        <>
+        <div className="inputData">
         <input type="number"
                value={value}
                onChange={onChangeHandler}
-               className={error ? 'error' : ''}
+               className={error ? 'inputError inputColor' : ''}
         />
-            {error && <span className="error">should be more 0</span>}
-        </>
+         {error && <div className="inputError">should be more 0</div>}
+        </div>
     );
 };

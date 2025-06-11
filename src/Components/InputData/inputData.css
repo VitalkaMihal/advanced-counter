@@ -1,3 +1,15 @@
-. error {
+.inputError {
+    appearance: none;
     color: red;
+    border-color: red;
+}
+
+.inputColor {
+    background-color: #e89d9d;
+}
+
+.inputData {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
 }
