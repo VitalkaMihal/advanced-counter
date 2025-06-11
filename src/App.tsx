@@ -1,6 +1,7 @@
 import {SetCounter} from "./layout/setCounter/SetCounter.tsx";
 import {Counter} from "./layout/counter/Counter.tsx";
 import {useEffect, useState} from "react";
+import "./App.css"
 
 export type DataType = {
     startValue: number
@@ -66,7 +67,7 @@ export function App() {
     }, []);
 
     return (
-        <>
+        <div className="App">
             <Counter
                 value={value}
                 stateError={stateError}
@@ -80,7 +81,7 @@ export function App() {
                 getStartValue={getStartValue}
                 getMaxValue={getMaxValue}
                 setDataCounter={setDataCounter}/>
-        </>
+        </div>
     )
 }
 
