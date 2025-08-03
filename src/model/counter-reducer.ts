@@ -35,7 +35,9 @@ export const counterReducer = (state: DataType = initialState, action: any): Dat
             const newState = {...state}
             return {...newState, maxValue: action.maxValue}
         }
-
+        case 'set': {
+            return {...state, maxValue: action.maxValue, startValue: action.startValue}
+        }
         case 'stateIncorrect':
             return {...state, stateIncorrect: action.stateIncorrect}
         default:

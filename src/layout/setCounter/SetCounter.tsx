@@ -9,6 +9,8 @@ import {useAppDispatch} from "../../common/hooks/useAppDispatch.ts";
 export const SetCounter = () => {
     const data = useAppSelector(selectCounter)
     const {startValue, maxValue} = data;
+    const [startValueLocal, setStartValueLocal] = useState<number>(startValue);
+    const [maxValueLocal, setMaxValueLocal] = useState<number>(maxValue);
 
     useEffect(() => {
             if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
@@ -19,36 +21,38 @@ export const SetCounter = () => {
     const dispatch = useAppDispatch()
 
     const [disabled, setDisabled] = useState<boolean>(true);
-    const isFirstRender = useRef(0);
+    const isFirstRender = useRef(true);
 
     useEffect(() => {
-        if (isFirstRender.current <= 2) {
-            isFirstRender.current++;
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
             return;
         }
         setDisabled(false)
-        if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
+        if (startValueLocal < 0 || maxValueLocal < 0 || startValueLocal >= maxValueLocal) {
             setDisabled(true)
         }
-    }, [startValue, maxValue])
+    }, [startValueLocal, maxValueLocal])
 
     const onChangeHandlerStart = (e: number) => {
-        dispatch({type: 'startValue', startValue: e})
+        console.log('1')
+        setStartValueLocal(e)
     }
 
     const onChangeHandlerMax = (e: number) => {
-        dispatch({type: 'maxValue', maxValue: e})
+        setMaxValueLocal(e)
+        console.log('2')
     }
 
     const onClickSetHandler = () => {
-
+        dispatch({type: 'set', maxValue: maxValueLocal, startValue: startValueLocal})
     }
 
     return (
         <div className="setCounter">
             <div className="setCounter-container">
-                <div className="setCounter-input"> start value:<InputData value={startValue} onChange={onChangeHandlerStart}/></div>
-                <div className="setCounter-input">max value:<InputData value={maxValue} onChange={onChangeHandlerMax}/></div>
+                <div className="setCounter-input"> start value:<InputData value={startValueLocal} onChange={onChangeHandlerStart}/></div>
+                <div className="setCounter-input">max value:<InputData value={maxValueLocal} onChange={onChangeHandlerMax}/></div>
             </div>
 
             <Button className="setCounter-button" title="set" onClick={onClickSetHandler} disabled={disabled}/>
