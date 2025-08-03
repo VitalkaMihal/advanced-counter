@@ -1,18 +1,22 @@
 import {Button} from "../../Components/Button/Button.tsx";
 import {InputData} from "../../Components/InputData/InputData.tsx";
 import {useEffect, useRef, useState} from "react";
-import type {DataType} from "../../App.tsx";
 import "./setCounter.css"
+import {useAppSelector} from "../../common/hooks/useAppSelector.ts";
+import {selectCounter} from "../../model/counter-selectors.ts";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch.ts";
 
-type setCounterProps = {
-    startValue: number
-    maxValue: number
-    getStartValue: (e: number) => void
-    getMaxValue: (e: number) => void
-    setDataCounter: (e: DataType) => void
-}
+export const SetCounter = () => {
+    const data = useAppSelector(selectCounter)
+    const {startValue, maxValue} = data;
 
-export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, setDataCounter}: setCounterProps) => {
+    useEffect(() => {
+            if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
+                dispatch({type: 'stateIncorrect', stateIncorrect: true})}
+            else{ dispatch({type: 'stateIncorrect', stateIncorrect: false})}},
+        [maxValue, startValue])
+
+    const dispatch = useAppDispatch()
 
     const [disabled, setDisabled] = useState<boolean>(true);
     const isFirstRender = useRef(0);
@@ -29,23 +33,15 @@ export const SetCounter = ({startValue, maxValue, getStartValue, getMaxValue, se
     }, [startValue, maxValue])
 
     const onChangeHandlerStart = (e: number) => {
-        getStartValue(e)
+        dispatch({type: 'startValue', startValue: e})
     }
 
     const onChangeHandlerMax = (e: number) => {
-        getMaxValue(e)
+        dispatch({type: 'maxValue', maxValue: e})
     }
 
     const onClickSetHandler = () => {
-        setDataCounter({
-            startValue: startValue,
-            maxValue: maxValue,
-            value: startValue,
-            stateError: false,
-            stateSet: false,
-            stateIncorrect: false,
-        })
-        setDisabled(true)
+
     }
 
     return (

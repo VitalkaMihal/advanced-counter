@@ -1,34 +1,35 @@
 import {Button} from "../../Components/Button/Button.tsx";
 import {Display} from "../display/Display.tsx";
 import "./counter.css"
+import {useAppSelector} from "../../common/hooks/useAppSelector.ts";
+import {selectCounter} from "../../model/counter-selectors.ts";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch.ts";
+import {useEffect} from "react";
 
-type CounterProps = {
-    value: number
-    stateError: boolean
-    stateSet: boolean
-    stateIncorrect: boolean
-    counterHandler: () => void
-    resetCounter: () => void;
-}
+export const Counter = () => {
+    const data = useAppSelector(selectCounter)
+    const {maxValue, value, stateError, stateSet} = data;
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+            if (value >= maxValue) {
+                dispatch({type: 'setStateError'})}},
+        [value])
 
 
-export const Counter = (
-    {stateError, value, stateSet, stateIncorrect, counterHandler, resetCounter}: CounterProps) => {
 
     const onClickHandlerCounter = () => {
-        counterHandler()
+        dispatch({type: 'increment'})
     }
 
     const onClickHandlerReset = () => {
-        resetCounter()
+        dispatch({type: 'resetCounter'})
     }
-
     return (
         <div className="counter">
             <div className="counter-display">
-                <Display
-                    title={stateSet ? stateIncorrect ? "Incorrect value!" : "enter values and press 'set'" : value}
-                    error={stateError || stateIncorrect}/>
+                <Display/>
             </div>
             <div className="counter-counter-button">
                 <Button title="inc" onClick={onClickHandlerCounter} disabled={stateError || stateSet}/>

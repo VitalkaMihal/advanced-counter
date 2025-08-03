@@ -1,14 +1,15 @@
 import "./styles.css"
+import {useAppSelector} from "../../common/hooks/useAppSelector.ts";
+import {selectCounter} from "../../model/counter-selectors.ts";
 
-type DisplayProps = {
-    title: number | string
-    error: boolean
-}
 
-export const Display = ({title, error}: DisplayProps) => {
+export const Display = () => {
+    const data = useAppSelector(selectCounter)
+console.log(data)
+
     return (
-        <div className={error ? "error" : undefined}>
-            {title}
+        <div className={data.stateError ? "error" : undefined}>
+            {data.stateSet ? data.stateIncorrect ? "Incorrect value!" : "enter values and press 'set'" : data.value}
         </div>
     );
 };
