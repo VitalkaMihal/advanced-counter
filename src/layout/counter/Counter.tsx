@@ -5,6 +5,7 @@ import {useAppSelector} from "../../common/hooks/useAppSelector.ts";
 import {selectCounter} from "../../model/counter-selectors.ts";
 import {useAppDispatch} from "../../common/hooks/useAppDispatch.ts";
 import {useEffect} from "react";
+import {incrementAC} from "../../model/counter-reducer.ts";
 
 export const Counter = () => {
     const data = useAppSelector(selectCounter)
@@ -20,7 +21,7 @@ export const Counter = () => {
 
 
     const onClickHandlerCounter = () => {
-        dispatch({type: 'increment'})
+        dispatch(incrementAC())
     }
 
     const onClickHandlerReset = () => {

@@ -1,3 +1,4 @@
+import {createAction, createReducer} from "@reduxjs/toolkit";
 
 export type DataType = {
     startValue: number
@@ -17,9 +18,15 @@ const initialState: DataType = {
     stateIncorrect: false,
 };
 
+export const incrementAC =  createAction('counter/incrementCounter');
 
+export const counterReducer = createReducer(initialState, (builder) => {
+    builder.addCase(incrementAC, (state) => {
+        if(state.value < state.maxValue) {state.value++}
+    })
+})
 
-export const counterReducer = (state: DataType = initialState, action: any): DataType => {
+export const counterReducer2 = (state: DataType = initialState, action: any): DataType => {
     switch (action.type) {
         case 'increment':
             return {...state, value: state.value < state.maxValue ? state.value + 1 : state.value};
