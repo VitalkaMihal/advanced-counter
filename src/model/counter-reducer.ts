@@ -9,10 +9,21 @@ export type DataType = {
     stateIncorrect: boolean
 }
 
+const local = () => {
+    try {
+        const serializedState = localStorage.getItem('state');
+        if (serializedState === null) {
+            return undefined;
+        }
+        return JSON.parse(serializedState)
+    } catch {
+        // ignore
+    }}
+
 const initialState: DataType = {
-    startValue: 0,
-    maxValue: 5,
-    value: 0,
+    startValue: local().startValue || 0,
+    maxValue: local().maxValue || 5,
+    value:local().startValue || 0,
     stateError: false,
     stateSet: false,
     stateIncorrect: false,
@@ -44,6 +55,11 @@ export const counterReducer = createReducer(initialState, (builder) => {
                 state.value = action.payload.startValue
                 state.maxValue = action.payload.maxValue
                 state.stateSet = false
+                try {
+                    localStorage.setItem('state', JSON.stringify({startValue: action.payload.startValue, maxValue: action.payload.maxValue}))
+                } catch {
+                    // ignore write errors
+                }
             }
         })
         .addCase(setIsActiveAC, (state, action) => {

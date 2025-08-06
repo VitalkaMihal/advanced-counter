@@ -13,18 +13,12 @@ export const SetCounter = () => {
     const [startValueLocal, setStartValueLocal] = useState<number>(startValue);
     const [maxValueLocal, setMaxValueLocal] = useState<number>(maxValue);
 
-    useEffect(() => {
-            if (startValue < 0 || maxValue < 0 || startValue >= maxValue) {
-                dispatch({type: 'stateIncorrect', stateIncorrect: true})}
-            else{ dispatch({type: 'stateIncorrect', stateIncorrect: false})}},
-        [maxValue, startValue])
-
     const dispatch = useAppDispatch()
 
     const [disabled, setDisabled] = useState<boolean>(true);
     const isFirstRender = useRef(true);
 
-    useEffect(() => {
+     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return;
