@@ -13,7 +13,7 @@ const local = () => {
     try {
         const serializedState = localStorage.getItem('state');
         if (serializedState === null) {
-            return undefined;
+            return {startValue: 0, maxValue: 5};
         }
         return JSON.parse(serializedState)
     } catch {
@@ -21,9 +21,9 @@ const local = () => {
     }}
 
 const initialState: DataType = {
-    startValue: local().startValue || 0,
-    maxValue: local().maxValue || 5,
-    value:local().startValue || 0,
+    startValue: local().startValue,
+    maxValue: local().maxValue,
+    value:local().startValue,
     stateError: false,
     stateSet: false,
     stateIncorrect: false,
