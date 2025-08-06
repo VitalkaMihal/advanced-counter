@@ -5,6 +5,7 @@ import "./setCounter.css"
 import {useAppSelector} from "../../common/hooks/useAppSelector.ts";
 import {selectCounter} from "../../model/counter-selectors.ts";
 import {useAppDispatch} from "../../common/hooks/useAppDispatch.ts";
+import {setCounterAC, setErrorAC, setIncorrectAC, setIsActiveAC} from "../../model/counter-reducer.ts";
 
 export const SetCounter = () => {
     const data = useAppSelector(selectCounter)
@@ -31,21 +32,26 @@ export const SetCounter = () => {
         setDisabled(false)
         if (startValueLocal < 0 || maxValueLocal < 0 || startValueLocal >= maxValueLocal) {
             setDisabled(true)
+            dispatch(setIncorrectAC({incorrect: true}))
+            dispatch(setErrorAC({stateError: true}))
+        }else{
+            dispatch(setIncorrectAC({incorrect: false}))
+            dispatch(setErrorAC({stateError: false}))
+            dispatch(setIsActiveAC({isActive: true}))
         }
     }, [startValueLocal, maxValueLocal])
 
     const onChangeHandlerStart = (e: number) => {
-        console.log('1')
         setStartValueLocal(e)
     }
 
     const onChangeHandlerMax = (e: number) => {
         setMaxValueLocal(e)
-        console.log('2')
     }
 
     const onClickSetHandler = () => {
-        dispatch({type: 'set', maxValue: maxValueLocal, startValue: startValueLocal})
+        dispatch(setCounterAC({startValue: startValueLocal, maxValue: maxValueLocal}))
+        setDisabled(true)
     }
 
     return (

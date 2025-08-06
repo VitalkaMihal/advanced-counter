@@ -5,7 +5,6 @@ import {selectCounter} from "../../model/counter-selectors.ts";
 
 export const Display = () => {
     const data = useAppSelector(selectCounter)
-console.log(data)
 
     return (
         <div className={data.stateError ? "error" : undefined}>
